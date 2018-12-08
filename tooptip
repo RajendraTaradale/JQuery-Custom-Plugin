@@ -1,0 +1,68 @@
+Custom Tool tip for td's if text length exceeds more than specified
+
+Below is sample JS-Plugin
+
+$.fn.tooltipOnOverflow = function (e, id, maxLen) {
+var txt = $(this).closest('tr').children('td:eq("' + id + '")').text();
+if (txt.length > maxLen) {
+$(this).closest('tr').children('td:eq("' + id + '")').empty();
+$(this).closest('tr').children('td:eq("' + id + '")').append(txt.substr(0, maxLen) + "...");
+$(this).closest('tr').children('td:eq("' + id + '")').attr('title', txt);
+}
+};
+
+Loop through table and bind the method for those of length is exceeding more than td’s width 
+
+tooltipOnOverflow(this, 2, 30);
+
+Parameter details
+
+This: current element or object
+2: this ‘2’ indicate second td in tr 
+30: Max length of text which fits into TD if exceeds then it adds … and rest content will display in tooltip 
+
+$('#arrayDdrcList tbody tr').each(function (i, row) {
+$(this).closest('tr').children('td:eq(2)').tooltipOnOverflow(this, 2, 30);
+});
+_________________________________________________________________________________________
+
+Form Validate for amend section (Editing Existing Data)
+
+$.fn.isChanged = function (oldValue, newValue, objectType) {
+var form = $(newValue),
+action = form.attr('action'),
+type = form.attr('method'),
+data = {};
+form.find('[name]').each(function (i, v) {
+var input = $(this),
+name = input.attr('name'),
+value = input.val();
+data[name] = value;
+});
+
+if (objectType == "typeObject") {
+if (OldDate.Name == formdata.Name) {
+return false;
+} else {
+return true;
+}
+}
+
+
+
+
+
+How to use
+
+if (!$(this).isChanged(objOldData, $("#StudentDetails"), "typeOne")) {
+alert(“No changes found- Please add or update to proceed further”);
+return false;
+}
+
+Parameter details
+
+isChanged(objOldData, $("#StudentDetails"), "typeOne"))
+objOldData : store the old values
+$("#StudentDetails"): this is form id of student which contains name address etc.
+typeOne: object type you use this to separate out the different collections
+
